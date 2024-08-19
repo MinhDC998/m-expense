@@ -8,12 +8,7 @@ import {
   UploadedFile,
   UseGuards,
 } from '@nestjs/common';
-import {
-  ApiBearerAuth,
-  ApiHeader,
-  ApiHeaders,
-  ApiQuery,
-} from '@nestjs/swagger';
+import { ApiQuery } from '@nestjs/swagger';
 
 import { FileUpload } from '@/decorators/uploadFile';
 import { Roles } from '@/decorators/roles.decoration';
@@ -37,7 +32,6 @@ export class UsersController {
   }
 
   @Get('admin/get')
-  @ApiBearerAuth()
   @Roles([ROLES.ADMIN])
   async findAll() {
     return 'admin only';
@@ -60,7 +54,6 @@ export class UsersController {
 
   @Post('login')
   async login(@Body() body: LoginDto) {
-    console.log(body);
     return this.userService.login(body);
   }
 }

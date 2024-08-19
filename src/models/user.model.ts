@@ -17,7 +17,7 @@ import { ROLES } from '@/constants/roles';
   createdAt: 'created_at',
   updatedAt: 'updated_at',
 })
-export class User extends Model implements TUser {
+ class User extends Model implements TUser {
   @Column({ field: 'first_name' })
   firstName: string;
 
@@ -64,3 +64,5 @@ export class User extends Model implements TUser {
     return { ...user.dataValues, password: null };
   }
 }
+
+export default User;

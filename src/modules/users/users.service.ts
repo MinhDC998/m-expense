@@ -1,7 +1,7 @@
 import { InjectModel } from '@nestjs/sequelize';
 
+import User from '@/models/user.model';
 import { Injectable, Logger } from '@nestjs/common';
-import { User } from '@/models/user.model';
 import { JwtService } from '@/services/jwt/jwt.service';
 
 import { TCreateUserDto, TLogin } from './types';
