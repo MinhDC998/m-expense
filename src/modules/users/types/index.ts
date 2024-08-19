@@ -1,3 +1,6 @@
+import { ROLES } from '@/constants/roles';
+import { TValueof } from '@/types/common';
+
 export type TUser = {
   firstName: string;
   lastName: string;
@@ -7,6 +10,7 @@ export type TUser = {
   status: string;
   studentNumber: string;
   password: string;
+  role: TValueof<typeof ROLES>;
 };
 
 export type TCreateUserDto = Omit<TUser, '_id'> & { confirmPassword: string };

@@ -1,6 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsEmail, Length, IsInt, Min, Max } from 'class-validator';
 import { TCreateUserDto, TFindUserDto, TLogin } from '../types';
+import { TValueof } from '@/types/common';
+import { ROLES } from '@/constants/roles';
 
 export class CreateUserDto implements TCreateUserDto {
   @ApiProperty()
@@ -37,6 +39,11 @@ export class CreateUserDto implements TCreateUserDto {
   @ApiProperty({ required: false })
   @IsEmail()
   email?: string;
+
+  @ApiProperty({
+    enum: ROLES,
+  })
+  role: TValueof<typeof ROLES>;
 }
 
 export class FindUserDto implements TFindUserDto {

@@ -8,11 +8,16 @@ import {
   UploadedFile,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiHeader,
+  ApiHeaders,
+  ApiQuery,
+} from '@nestjs/swagger';
 
 import { FileUpload } from '@/decorators/uploadFile';
-import { RolesGuard } from '@/guards/role.guard';
 import { Roles } from '@/decorators/roles.decoration';
+import { RolesGuard } from '@/guards/role.guard';
 import { ROLES } from '@/constants/roles';
 
 import { CreateUserDto, FindUserDto, LoginDto, UploadAvatar } from './dto';
@@ -28,7 +33,7 @@ export class UsersController {
   @Get()
   @ApiQuery({ type: [FindUserDto] })
   async find(@Query() query) {
-    return 'user get';
+    return this.userService.pagination({});
   }
 
   @Get('admin/get')
@@ -40,7 +45,7 @@ export class UsersController {
 
   @Post('register')
   async register(@Body() body: CreateUserDto) {
-    return this.userService.createUser(body);
+    return this.userService.create(body);
   }
 
   @Post('update-avatar')
@@ -55,6 +60,7 @@ export class UsersController {
 
   @Post('login')
   async login(@Body() body: LoginDto) {
+    console.log(body);
     return this.userService.login(body);
   }
 }

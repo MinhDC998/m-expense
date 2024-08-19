@@ -1,13 +1,14 @@
 export const configuration = () => ({
   port: process.env.PORT || 3000,
   db: {
-    type: process.env.DB_TYPE,
-    synchronize: false,
-    logging: true,
+    dialect: process.env.DB_DIALECT,
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
-    username: process.env.DB_USER,
+    username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
+    autoLoadModels: true,
+    synchronize: true,
+    logging: true,
   },
 });

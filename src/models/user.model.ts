@@ -1,7 +1,15 @@
-import { Column, Model, Table, BeforeCreate } from 'sequelize-typescript';
+import {
+  Column,
+  Model,
+  Table,
+  BeforeCreate,
+  DataType,
+} from 'sequelize-typescript';
 import * as bcrypt from 'bcrypt';
 
 import { TUser } from 'src/modules/users/types';
+import { TValueof } from '@/types/common';
+import { ROLES } from '@/constants/roles';
 
 @Table({
   tableName: 'users',
@@ -33,6 +41,12 @@ export class User extends Model implements TUser {
 
   @Column({ field: 'password' })
   password: string;
+
+  @Column({
+    field: 'role',
+    type: DataType.ENUM(...Object.keys(ROLES).map((v) => ROLES[v])),
+  })
+  role: TValueof<typeof ROLES>;
 
   @BeforeCreate
   static async hashPassword(user: TUser) {
