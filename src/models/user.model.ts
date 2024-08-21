@@ -4,12 +4,14 @@ import {
   Table,
   BeforeCreate,
   DataType,
+  HasMany,
 } from 'sequelize-typescript';
 import * as bcrypt from 'bcrypt';
 
 import { TUser } from 'src/modules/users/types';
 import { TValueof } from '@/types/common';
 import { ROLES } from '@/constants/roles';
+import Admin from './admin.model';
 
 @Table({
   tableName: 'users',
@@ -17,7 +19,7 @@ import { ROLES } from '@/constants/roles';
   createdAt: 'created_at',
   updatedAt: 'updated_at',
 })
- class User extends Model implements TUser {
+export default class User extends Model implements TUser {
   @Column({ field: 'first_name' })
   firstName: string;
 
@@ -48,6 +50,9 @@ import { ROLES } from '@/constants/roles';
   })
   role: TValueof<typeof ROLES>;
 
+  @HasMany(() => Admin)
+  admins: Admin[];
+
   @BeforeCreate
   static async hashPassword(user: TUser) {
     user.password = await bcrypt.hash(user.password, 10);
@@ -64,5 +69,3 @@ import { ROLES } from '@/constants/roles';
     return { ...user.dataValues, password: null };
   }
 }
-
-export default User;
