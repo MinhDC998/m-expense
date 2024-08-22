@@ -34,6 +34,11 @@ export type I18nTranslations = {
         };
         "nested": string;
     };
+    "validation": {
+        "required": string;
+        "email": string;
+        "string": string;
+    };
 };
 /* prettier-ignore */
 export type I18nPath = Path<I18nTranslations>;

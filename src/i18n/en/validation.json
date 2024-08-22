@@ -1,0 +1,5 @@
+{
+    "required": "{field} is required",
+    "email": "{email} must be an email",
+    "string": "{field} must be string"
+}

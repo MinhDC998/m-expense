@@ -1,6 +1,6 @@
 import { PAGINATION_DEFAULT } from '@/constants/common';
 import { TPagination } from '@/types/common';
-import { CreateOptions, FindOptions, Model, ModelStatic } from 'sequelize';
+import { FindOptions, Model, ModelStatic } from 'sequelize';
 
 type TFindAndCountResponse<T> = Promise<{
   rows: T[];

@@ -4,7 +4,7 @@ import User from '@/models/user.model';
 import { Injectable, Logger } from '@nestjs/common';
 import { JwtService } from '@/services/jwt/jwt.service';
 
-import { TCreateUserDto, TLogin } from './types';
+import { TLogin } from './types';
 import { BaseRepository } from '@/services/models/model';
 
 @Injectable()

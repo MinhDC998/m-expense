@@ -17,6 +17,8 @@ import { ROLES } from '@/constants/roles';
 
 import { CreateUserDto, FindUserDto, LoginDto, UploadAvatar } from './dto';
 import { UsersService } from './users.service';
+import { i18nValidationMessage } from 'nestjs-i18n';
+import { I18nTranslations } from '@/generated/i18n.generated';
 
 @Controller('users')
 @UseGuards(RolesGuard)
@@ -39,6 +41,7 @@ export class UsersController {
   }
 
   @Post('register')
+  @ApiHeader({ name: 'lang' })
   async register(@Body() body: CreateUserDto) {
     return this.userService.create(body);
   }

@@ -1,0 +1,5 @@
+{
+    "required": "{field} is required in JA",
+    "email": "{email} must be an email in JA",
+    "string": "{field} must be string in JA"
+}
