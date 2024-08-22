@@ -4,11 +4,13 @@ import {
   Table,
   ForeignKey,
   BelongsTo,
+  HasMany,
 } from 'sequelize-typescript';
 
 import { TMember } from '@/modules/member/types';
 import Department from './department.model';
 import User from './user.model';
+import PortFolio from './portfolio.model';
 
 @Table({
   tableName: 'members',
@@ -33,4 +35,7 @@ export default class Member extends Model implements TMember {
 
   @BelongsTo(() => User)
   user: User;
+
+  @HasMany(() => PortFolio)
+  members: PortFolio[];
 }
