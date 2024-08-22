@@ -2,9 +2,7 @@ import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
 
-import DatabaseConnection from './database/db';
-
-import { configuration } from './config';
+import { configuration, I18nConfig, DatabaseConnection } from './config';
 import { LoggerMiddleware } from './middlewares/test';
 
 import { UsersModule } from './modules/users/users.module';
@@ -22,7 +20,8 @@ import { MemberModule } from './modules/member/member.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ load: [configuration] }),
+    ConfigModule.forRoot({ load: [configuration], isGlobal: true }),
+    I18nConfig,
     DatabaseConnection,
     PassportModule,
     UsersModule,

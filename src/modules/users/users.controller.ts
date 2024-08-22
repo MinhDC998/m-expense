@@ -8,7 +8,7 @@ import {
   UploadedFile,
   UseGuards,
 } from '@nestjs/common';
-import { ApiQuery } from '@nestjs/swagger';
+import { ApiHeader, ApiQuery } from '@nestjs/swagger';
 
 import { FileUpload } from '@/decorators/uploadFile';
 import { Roles } from '@/decorators/roles.decoration';
@@ -26,6 +26,7 @@ export class UsersController {
   constructor(private userService: UsersService) {}
 
   @Get()
+  @ApiHeader({ name: 'lang' })
   @ApiQuery({ type: [FindUserDto] })
   async find(@Query() query) {
     return this.userService.pagination({});
