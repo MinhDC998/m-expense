@@ -1,4 +1,6 @@
 {
   "hello": "Hello",
-  "welcome": "Welcome to our application"
+  "welcome": "Welcome to our application",
+  "forbidden": "You must login first",
+  "forbiddenRole": "You don't have permission to access hear"
 }

@@ -12,13 +12,13 @@ import { ApiHeader, ApiQuery } from '@nestjs/swagger';
 
 import { FileUpload } from '@/decorators/uploadFile';
 import { Roles } from '@/decorators/roles.decoration';
+
 import { RolesGuard } from '@/guards/role.guard';
+import { AuthGuard } from '@/guards/auth.guard';
 import { ROLES } from '@/constants/roles';
 
 import { CreateUserDto, FindUserDto, LoginDto, UploadAvatar } from './dto';
 import { UsersService } from './users.service';
-import { i18nValidationMessage } from 'nestjs-i18n';
-import { I18nTranslations } from '@/generated/i18n.generated';
 
 @Controller('users')
 @UseGuards(RolesGuard)
@@ -26,6 +26,17 @@ export class UsersController {
   private readonly logger = new Logger(UsersController.name);
 
   constructor(private userService: UsersService) {}
+
+  @Get('no-auth')
+  async noAuth() {
+    return 'no auth require';
+  }
+
+  @Get('auth')
+  @UseGuards(AuthGuard)
+  async auth() {
+    return 'auth require';
+  }
 
   @Get()
   @ApiHeader({ name: 'lang' })

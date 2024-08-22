@@ -8,6 +8,8 @@ export type I18nTranslations = {
     "index": {
         "hello": string;
         "welcome": string;
+        "forbidden": string;
+        "forbiddenRole": string;
     };
     "test": {
         "HELLO": string;
