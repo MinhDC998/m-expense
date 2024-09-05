@@ -36,6 +36,7 @@ export class UsersService extends BaseRepository<User> {
       const accessToken = await this.jwtService.generateToken({
         id: user.id,
         roles: [user.role],
+        sub: 'googleDrive',
       });
 
       return { ...this.userModel.userResponse(user), accessToken };

@@ -10,6 +10,7 @@ export type I18nTranslations = {
         "welcome": string;
         "forbidden": string;
         "forbiddenRole": string;
+        "subRequire": string;
     };
     "test": {
         "HELLO": string;

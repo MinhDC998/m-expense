@@ -101,8 +101,10 @@ export class UploadAvatar {
 
 export class LoginDto implements TLogin {
   @ApiProperty()
+  @IsString()
   email: string;
 
   @ApiProperty()
+  @IsString()
   password: string;
 }

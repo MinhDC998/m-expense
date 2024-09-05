@@ -15,7 +15,6 @@ import { I18nService } from 'nestjs-i18n';
 export class RolesGuard implements CanActivate {
   constructor(
     private readonly reflector: Reflector,
-    private readonly jwtService: JwtService,
     private readonly i18n: I18nService<I18nTranslations>,
   ) {}
 
@@ -24,11 +23,7 @@ export class RolesGuard implements CanActivate {
     if (!roles) return true;
 
     const request = context.switchToHttp().getRequest();
-    const token = request.headers.authorization?.split(' ')[1];
-
-    if (!token) throw new ForbiddenException(this.i18n.t('index.forbidden'));
-
-    const user = this.jwtService.verifyToken(token);
+    const user = request.user;
 
     if (
       !user ||

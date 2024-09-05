@@ -1,5 +1,6 @@
 {
     "hello": "Hello from Japan",
     "welcome": "Welcome to our application from Japan",
-    "forbidden": "You must login first in Japan"
+    "forbidden": "You must login first in Japan",
+    "subRequire": "Sub is require in JA lang"
   }

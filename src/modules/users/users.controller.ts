@@ -42,7 +42,7 @@ export class UsersController {
   @ApiHeader({ name: 'lang' })
   @ApiQuery({ type: [FindUserDto] })
   async find(@Query() query) {
-    return this.userService.pagination({});
+    return this.userService.pagination();
   }
 
   @Get('admin/get')
