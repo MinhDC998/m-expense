@@ -4,14 +4,12 @@ import {
   Table,
   BeforeCreate,
   DataType,
-  HasMany,
 } from 'sequelize-typescript';
 import * as bcrypt from 'bcrypt';
 
-import { TUser } from 'src/modules/users/types';
+import { TUser } from 'src/modules/users/users.types';
 import { TValueof } from '@/types/common';
 import { ROLES } from '@/constants/roles';
-import Admin from './admin.model';
 
 @Table({
   tableName: 'users',
@@ -26,20 +24,11 @@ export default class User extends Model implements TUser {
   @Column({ field: 'last_name' })
   lastName: string;
 
-  @Column({ field: 'first_kana' })
-  firstKana: string;
-
-  @Column({ field: 'last_kana' })
-  lastKana: string;
-
   @Column({ field: 'email', unique: true })
   email: string;
 
   @Column({ field: 'status' })
   status: string;
-
-  @Column({ field: 'student_number' })
-  studentNumber: string;
 
   @Column({ field: 'password' })
   password: string;
@@ -49,9 +38,6 @@ export default class User extends Model implements TUser {
     type: DataType.ENUM(...Object.keys(ROLES).map((v) => ROLES[v])),
   })
   role: TValueof<typeof ROLES>;
-
-  @HasMany(() => Admin)
-  admins: Admin[];
 
   @BeforeCreate
   static async hashPassword(user: TUser) {

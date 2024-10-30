@@ -10,11 +10,11 @@ import {
 } from '@nestjs/common';
 import { ApiHeader, ApiQuery } from '@nestjs/swagger';
 
-import { FileUpload } from '@/decorators/uploadFile';
-import { Roles } from '@/decorators/roles.decoration';
+import { FileUpload } from '@/common/decorators/uploadFile.decorator';
+import { Roles } from '@/common/decorators/roles.decorator';
 
-import { RolesGuard } from '@/guards/role.guard';
-import { AuthGuard } from '@/guards/auth.guard';
+import { RolesGuard } from '@/common/guards/role.guard';
+import { AuthGuard } from '@/common/guards/auth.guard';
 import { ROLES } from '@/constants/roles';
 
 import { CreateUserDto, FindUserDto, LoginDto, UploadAvatar } from './dto';

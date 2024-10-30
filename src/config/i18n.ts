@@ -15,10 +15,7 @@ export const I18nConfig = I18nModule.forRootAsync({
       path: path.join(__dirname, '../i18n'),
       watch: true,
     },
-    typesOutputPath: path.join(
-      __dirname,
-      '../../src/generated/i18n.generated.ts',
-    ),
+    typesOutputPath: path.join(__dirname, '../../src/i18n/i18n.generated.ts'),
   }),
   resolvers: [
     new QueryResolver(['lang']),

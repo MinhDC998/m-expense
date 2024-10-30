@@ -1,4 +1,4 @@
-import { I18nTranslations } from '@/generated/i18n.generated';
+import { I18nTranslations } from '@/i18n/i18n.generated';
 import {
   Injectable,
   CanActivate,
@@ -17,8 +17,6 @@ export class SubGuard implements CanActivate {
 
     const user = request.user;
     if (!user) throw new ForbiddenException(this.i18n.t('index.forbidden'));
-
-    if (!user.sub) throw new ForbiddenException(this.i18n.t('index.subRequire'));
 
     return true;
   }

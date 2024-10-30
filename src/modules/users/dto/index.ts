@@ -1,10 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsEmail, Length, IsOptional } from 'class-validator';
-import { TCreateUserDto, TFindUserDto, TLogin } from '../types';
+import { TCreateUserDto, TFindUserDto, TLogin } from '../users.types';
 import { TValueof } from '@/types/common';
 import { ROLES } from '@/constants/roles';
 import { i18nValidationMessage } from 'nestjs-i18n';
-import { I18nTranslations } from '@/generated/i18n.generated';
+import { I18nTranslations } from '@/i18n/i18n.generated';
 
 export class CreateUserDto implements TCreateUserDto {
   @ApiProperty()
@@ -25,28 +25,8 @@ export class CreateUserDto implements TCreateUserDto {
   lastName: string;
 
   @ApiProperty()
-  @IsString({
-    message: i18nValidationMessage<I18nTranslations>('validation.string', {
-      field: 'firstKana',
-    }),
-  })
-  firstKana: string;
-
-  @ApiProperty()
-  @IsString({
-    message: i18nValidationMessage<I18nTranslations>('validation.string', {
-      field: 'lastKana',
-    }),
-  })
-  lastKana: string;
-
-  @ApiProperty()
   @IsOptional()
   status: string;
-
-  @ApiProperty()
-  @IsOptional()
-  studentNumber: string;
 
   @ApiProperty()
   @Length(6, 20, {
@@ -70,7 +50,7 @@ export class CreateUserDto implements TCreateUserDto {
     },
   )
   @IsOptional()
-  email?: string;
+  email: string;
 
   @ApiProperty({
     enum: ROLES,

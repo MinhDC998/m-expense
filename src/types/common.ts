@@ -11,5 +11,6 @@ export type TPagination<P extends FindOptions> = P & {
 export type TJwtPayload = {
   id: number;
   roles: TValueof<typeof ROLES>[];
-  sub: string;
 };
+
+export type TExact<T, U> = T extends U ? (U extends T ? T : never) : never;

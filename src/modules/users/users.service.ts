@@ -4,7 +4,7 @@ import User from '@/models/user.model';
 import { Injectable, Logger } from '@nestjs/common';
 import { JwtService } from '@/services/jwt/jwt.service';
 
-import { TLogin } from './types';
+import { TLogin } from './users.types';
 import { BaseRepository } from '@/services/models/model';
 
 @Injectable()
@@ -36,7 +36,6 @@ export class UsersService extends BaseRepository<User> {
       const accessToken = await this.jwtService.generateToken({
         id: user.id,
         roles: [user.role],
-        sub: 'googleDrive',
       });
 
       return { ...this.userModel.userResponse(user), accessToken };

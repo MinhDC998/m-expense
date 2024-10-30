@@ -4,11 +4,8 @@ import { TValueof } from '@/types/common';
 export type TUser = {
   firstName: string;
   lastName: string;
-  firstKana: string;
-  lastKana: string;
-  email?: string;
+  email: string;
   status: string;
-  studentNumber: string;
   password: string;
   role: TValueof<typeof ROLES>;
 };

@@ -38,9 +38,11 @@ export class BaseRepository<T extends Model<T>> {
     });
   }
 
-  pagination(options?: TPagination<FindOptions<T>>): TFindAndCountResponse<T> {
-    if (!options.offset) options.offset = PAGINATION_DEFAULT.offset;
-    if (!options.size) options.size = PAGINATION_DEFAULT.size;
+  pagination(
+    options: TPagination<FindOptions<T>> = {},
+  ): TFindAndCountResponse<T> {
+    if (!options?.offset) options.offset = PAGINATION_DEFAULT.offset;
+    if (!options?.size) options.size = PAGINATION_DEFAULT.size;
 
     const result = this.findAndCountAll(options);
 
