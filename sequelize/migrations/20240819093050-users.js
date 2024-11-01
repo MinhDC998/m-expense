@@ -27,7 +27,6 @@ module.exports = {
         allowNull: false,
       },
       status: Sequelize.STRING,
-      student_number: Sequelize.STRING,
       role: Sequelize.STRING,
       created_at: {
         allowNull: false,

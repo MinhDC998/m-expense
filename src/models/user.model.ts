@@ -7,7 +7,7 @@ import {
 } from 'sequelize-typescript';
 import * as bcrypt from 'bcrypt';
 
-import { TUser } from 'src/modules/users/users.types';
+import { TUser } from '@/types/users.types';
 import { TValueof } from '@/types/common';
 import { ROLES } from '@/constants/roles';
 

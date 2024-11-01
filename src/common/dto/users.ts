@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsEmail, Length, IsOptional } from 'class-validator';
-import { TCreateUserDto, TFindUserDto, TLogin } from '../users.types';
+import { TCreateUserDto, TFindUserDto, TLogin } from '../../types/users.types';
 import { TValueof } from '@/types/common';
 import { ROLES } from '@/constants/roles';
 import { i18nValidationMessage } from 'nestjs-i18n';
