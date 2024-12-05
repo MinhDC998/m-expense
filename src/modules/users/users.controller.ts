@@ -4,7 +4,6 @@ import {
   Get,
   Logger,
   Post,
-  Query,
   UploadedFile,
   UseGuards,
 } from '@nestjs/common';
@@ -22,7 +21,7 @@ import {
   FindUserDto,
   LoginDto,
   UploadAvatar,
-} from '../../common/dto';
+} from '../../common/dto/users';
 import { UsersService } from './users.service';
 
 @Controller('users')
@@ -46,7 +45,7 @@ export class UsersController {
   @Get()
   @ApiHeader({ name: 'lang' })
   @ApiQuery({ type: [FindUserDto] })
-  async find(@Query() query) {
+  async find() {
     return this.userService.pagination();
   }
 
