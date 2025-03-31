@@ -1,5 +1,5 @@
-import { CURRENCY } from '@/constants/common';
-import { TValueof } from './common';
+import { CURRENCY } from '@/common/constants/common';
+import { TValueof } from '../../common/types/common';
 
 export type TIncome = {
   value: number;

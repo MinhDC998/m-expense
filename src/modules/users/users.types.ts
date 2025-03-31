@@ -1,5 +1,5 @@
-import { ROLES } from '@/constants/roles';
-import { TValueof } from '@/types/common';
+import { ROLES } from '@/common/constants/roles';
+import { TValueof } from '@/common/types/common';
 
 export type TUser = {
   firstName: string;

@@ -1,7 +1,7 @@
-import { ROLES } from '@/constants/roles';
+import { ROLES } from '@/common/constants/roles';
 import { I18nTranslations } from '@/i18n/i18n.generated';
-import { JwtService } from '@/services/jwt/jwt.service';
-import { TValueof } from '@/types/common';
+import { JwtService } from '@/common/services/jwt/jwt.service';
+import { TValueof } from '@/common/types/common';
 import {
   Injectable,
   CanActivate,

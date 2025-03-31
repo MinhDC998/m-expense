@@ -1,5 +1,5 @@
-import { ROLES } from '@/constants/roles';
-import { TValueof } from '@/types/common';
+import { ROLES } from '@/common/constants/roles';
+import { TValueof } from '@/common/types/common';
 import { SetMetadata } from '@nestjs/common';
 
 export const ROLES_KEY = 'roles';

@@ -1,11 +1,12 @@
 import { InjectModel } from '@nestjs/sequelize';
-
-import User from '@/models/user.model';
 import { Injectable, Logger } from '@nestjs/common';
-import { JwtService } from '@/services/jwt/jwt.service';
 
-import { TLogin } from '../../types/users.types';
-import { BaseRepository } from '@/services/models/model';
+import { JwtService } from '@/common/services/jwt/jwt.service';
+
+import { BaseRepository } from '@/common/services/models/model';
+
+import { TLogin } from './users.types';
+import User from './user.entity';
 
 @Injectable()
 export class UsersService extends BaseRepository<User> {

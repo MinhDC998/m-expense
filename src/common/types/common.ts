@@ -1,4 +1,4 @@
-import { ROLES } from '@/constants/roles';
+import { ROLES } from '@/common/constants/roles';
 import { FindOptions } from 'sequelize';
 
 export type TValueof<V> = V[keyof V];

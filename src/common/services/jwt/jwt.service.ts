@@ -1,6 +1,7 @@
-import { TJwtPayload } from '@/types/common';
 import { Injectable } from '@nestjs/common';
 import { JwtService as JwtLibService } from '@nestjs/jwt';
+
+import { TJwtPayload } from '@/common/types/common';
 
 @Injectable()
 export class JwtService {

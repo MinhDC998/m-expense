@@ -14,14 +14,14 @@ import { Roles } from '@/common/decorators/roles.decorator';
 
 import { RolesGuard } from '@/common/guards/role.guard';
 import { AuthGuard } from '@/common/guards/auth.guard';
-import { ROLES } from '@/constants/roles';
+import { ROLES } from '@/common/constants/roles';
 
 import {
   CreateUserDto,
   FindUserDto,
   LoginDto,
   UploadAvatar,
-} from '../../common/dto/users';
+} from '@/modules/users/dto';
 import { UsersService } from './users.service';
 
 @Controller('users')

@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-
-import User from '@/models/user.model';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { JwtModule } from '@/services/jwt/jwt.module';
+
+import { JwtModule } from '@/common/services/jwt/jwt.module';
+import User from '@/modules/users/user.entity';
 
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';

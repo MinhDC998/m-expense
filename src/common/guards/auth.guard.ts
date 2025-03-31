@@ -1,5 +1,5 @@
 import { I18nTranslations } from '@/i18n/i18n.generated';
-import { JwtService } from '@/services/jwt/jwt.service';
+import { JwtService } from '@/common/services/jwt/jwt.service';
 import {
   Injectable,
   CanActivate,

@@ -1,10 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsEmail, Length, IsOptional } from 'class-validator';
-import { TCreateUserDto, TFindUserDto, TLogin } from '../../types/users.types';
-import { TValueof } from '@/types/common';
-import { ROLES } from '@/constants/roles';
 import { i18nValidationMessage } from 'nestjs-i18n';
+import { IsString, IsEmail, Length, IsOptional } from 'class-validator';
+
+import { TValueof } from '@/common/types/common';
+import { ROLES } from '@/common/constants/roles';
 import { I18nTranslations } from '@/i18n/i18n.generated';
+
+import { TCreateUserDto, TLogin } from '@/modules/users/users.types';
 
 export class CreateUserDto implements TCreateUserDto {
   @ApiProperty()
@@ -57,26 +59,6 @@ export class CreateUserDto implements TCreateUserDto {
   })
   @IsString()
   role: TValueof<typeof ROLES>;
-}
-
-export class FindUserDto implements TFindUserDto {
-  @ApiProperty({
-    description: 'Find by name or email',
-    required: false,
-  })
-  keyword: string;
-}
-
-export class UploadAvatar {
-  @ApiProperty()
-  name: string;
-
-  @ApiProperty({
-    type: 'string',
-    format: 'binary',
-    description: 'File to upload',
-  })
-  file: any;
 }
 
 export class LoginDto implements TLogin {
