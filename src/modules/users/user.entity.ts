@@ -1,58 +1,69 @@
-import {
-  Column,
-  Model,
-  Table,
-  BeforeCreate,
-  DataType,
-} from 'sequelize-typescript';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 
 import { TValueof } from '@/common/types/common';
 import { ROLES } from '@/common/constants/roles';
-
 import { TUser } from './users.types';
+import { BaseEntity } from '@/common/services/models/model';
 
-@Table({
-  tableName: 'users',
-  timestamps: true,
-  createdAt: 'created_at',
-  updatedAt: 'updated_at',
+export type UserDocument = User & Document & BaseEntity;
+
+@Schema({
+  collection: 'users',
+  timestamps: {
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
+  },
 })
-export default class User extends Model implements TUser {
-  @Column({ field: 'first_name' })
+export class User implements TUser {
+  @Prop({ required: true })
   firstName: string;
 
-  @Column({ field: 'last_name' })
+  @Prop({ required: true })
   lastName: string;
 
-  @Column({ field: 'email', unique: true })
+  @Prop({ required: true, unique: true })
   email: string;
 
-  @Column({ field: 'status' })
+  @Prop({ required: true })
   status: string;
 
-  @Column({ field: 'password' })
+  @Prop({ required: true })
   password: string;
 
-  @Column({
-    field: 'role',
-    type: DataType.ENUM(...Object.keys(ROLES).map((v) => ROLES[v])),
+  @Prop({
+    required: true,
+    enum: Object.values(ROLES),
+    default: ROLES.USER,
+    type: String,
   })
   role: TValueof<typeof ROLES>;
-
-  @BeforeCreate
-  static async hashPassword(user: TUser) {
-    user.password = await bcrypt.hash(user.password, 10);
-  }
-
-  static async validatePassword(
-    password: string,
-    user: TUser,
-  ): Promise<boolean> {
-    return bcrypt.compare(password, user.password);
-  }
-
-  static userResponse(user: Model<TUser>) {
-    return { ...user.dataValues, password: null };
-  }
 }
+
+export const UserSchema = SchemaFactory.createForClass(User);
+
+UserSchema.pre('save', async function (next) {
+  const user = this as unknown as UserDocument;
+
+  if (!user.isModified('password')) return next();
+
+  try {
+    user.password = await bcrypt.hash(user.password, 10);
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
+
+UserSchema.methods.validatePassword = async function (
+  password: string,
+): Promise<boolean> {
+  return bcrypt.compare(password, this.password);
+};
+
+UserSchema.statics.userResponse = function (user: UserDocument) {
+  const userObject = user.toObject();
+  delete userObject.password;
+  return userObject;
+};

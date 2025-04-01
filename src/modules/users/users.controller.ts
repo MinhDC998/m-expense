@@ -19,7 +19,7 @@ import { ROLES } from '@/common/constants/roles';
 import {
   CreateUserDto,
   FindUserDto,
-  LoginDto,
+  // LoginDto,
   UploadAvatar,
 } from '@/modules/users/dto';
 import { UsersService } from './users.service';
@@ -71,8 +71,8 @@ export class UsersController {
     };
   }
 
-  @Post('login')
-  async login(@Body() body: LoginDto) {
-    return this.userService.login(body);
-  }
+  // @Post('login')
+  // async login(@Body() body: LoginDto) {
+  //   return this.userService.login(body);
+  // }
 }

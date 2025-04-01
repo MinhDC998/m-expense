@@ -1,9 +1,9 @@
 import { ROLES } from '@/common/constants/roles';
-import { FindOptions } from 'sequelize';
+import { FilterQuery } from 'mongoose';
 
 export type TValueof<V> = V[keyof V];
 
-export type TPagination<P extends FindOptions> = P & {
+export type TPagination<P extends FilterQuery<unknown>> = P & {
   offset?: number;
   size?: number;
 };

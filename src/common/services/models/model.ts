@@ -1,57 +1,95 @@
+import {
+  Document,
+  FilterQuery,
+  Model,
+  PipelineStage,
+  UpdateQuery,
+} from 'mongoose';
 import { PAGINATION_DEFAULT } from '@/common/constants/common';
 import { TPagination } from '@/common/types/common';
-import { FindOptions, Model, ModelStatic } from 'sequelize';
+
+export interface BaseEntity extends Document {
+  _id: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 type TFindAndCountResponse<T> = Promise<{
   rows: T[];
   count: number;
 }>;
 
-export class BaseRepository<T extends Model<T>> {
-  constructor(private readonly model: ModelStatic<T>) {}
+export class BaseRepository<T extends BaseEntity> {
+  constructor(private readonly model: Model<T>) {}
 
-  getAll(options?: FindOptions<T>) {
-    return this.model.findAll(options);
+  getAll(filter: FilterQuery<T> = {}, projection?: any) {
+    return this.model.find(filter, projection).exec();
   }
 
-  findOneById(id: number) {
-    return this.model.findByPk(id);
+  findOneById(id: string, projection?: any) {
+    return this.model.findById(id, projection).exec();
   }
 
-  findOneBy(options: FindOptions<T>) {
-    return this.model.findOne(options);
+  findOneBy(filter: FilterQuery<T>, projection?: any) {
+    return this.model.findOne(filter, projection).exec();
   }
 
-  findAndCountAll(options: FindOptions<T>): TFindAndCountResponse<T> {
-    const result = this.model.findAll({
-      ...options,
-      limit: options.limit,
-      offset: options.offset,
-    });
+  async findAndCountAll(options: {
+    filter?: FilterQuery<T>;
+    projection?: any;
+    sort?: any;
+    limit?: number;
+    skip?: number;
+  }): TFindAndCountResponse<T> {
+    const { filter = {}, projection, sort, limit, skip } = options;
 
-    const count = this.model.count({
-      where: options.where,
-    });
+    const query = this.model.find(filter, projection);
 
-    return Promise.all([result, count]).then(([resultRes, countRes]) => {
-      return { rows: resultRes, count: countRes };
-    });
+    if (sort) query.sort(sort);
+    if (limit) query.limit(limit);
+    if (skip) query.skip(skip);
+
+    const [rows, count] = await Promise.all([
+      query.exec(),
+      this.model.countDocuments(filter).exec(),
+    ]);
+
+    return { rows, count };
   }
 
-  pagination(
-    options: TPagination<FindOptions<T>> = {},
+  async pagination(
+    options: TPagination<{
+      filter?: FilterQuery<T>;
+      projection?: any;
+      sort?: any;
+    }> = {},
   ): TFindAndCountResponse<T> {
-    if (!options?.offset) options.offset = PAGINATION_DEFAULT.offset;
-    if (!options?.size) options.size = PAGINATION_DEFAULT.size;
+    const offset = options?.offset || PAGINATION_DEFAULT.offset;
+    const size = options?.size || PAGINATION_DEFAULT.size;
 
-    const result = this.findAndCountAll(options);
-
-    return result;
+    return this.findAndCountAll({
+      filter: options.filter,
+      projection: options.projection,
+      sort: options.sort,
+      limit: size,
+      skip: offset,
+    });
   }
 
-  create(data) {
-    console.log(data);
-    return data;
-    // return this.model.create(data);
+  create(data: Partial<T>): Promise<T> {
+    return this.model.create(data);
+  }
+
+  update(id: string, data: UpdateQuery<T>) {
+    return this.model.findByIdAndUpdate(id, data, { new: true }).exec();
+  }
+
+  delete(id: string) {
+    return this.model.findByIdAndDelete(id).exec();
+  }
+
+  // Additional MongoDB-specific methods
+  aggregate(pipeline: PipelineStage[]) {
+    return this.model.aggregate(pipeline).exec();
   }
 }
