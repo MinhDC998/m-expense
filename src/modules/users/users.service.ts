@@ -6,8 +6,8 @@ import { JwtService } from '@/common/services/jwt/jwt.service';
 import { BaseRepository } from '@/common/services/models/model';
 import { ROLES } from '@/common/constants/roles';
 
-// import { TLogin } from './users.types';
-import { User, UserDocument } from './user.entity';
+import { TLogin } from './users.types';
+import { User, UserDocument } from './user.model';
 
 @Injectable()
 export class UsersService extends BaseRepository<UserDocument> {
@@ -20,31 +20,26 @@ export class UsersService extends BaseRepository<UserDocument> {
     super(userModel);
   }
 
-  // async login(body: TLogin) {
-  //   try {
-  //     const { email, password } = body;
-  //     const user = await this.findOneBy({ where: { email } });
+  async login(body: TLogin) {
+    try {
+      const { email, password } = body;
 
-  //     if (!user) throw new Error('User not found');
+      const user = await this.findOneBy({ email });
+      if (!user) throw new Error('User not found');
 
-  //     const isValidPassword = await this.userModel.validatePassword(
-  //       password,
-  //       user,
-  //     );
+      const isValidPassword = await user.validatePassword(password, user);
+      if (!isValidPassword) throw new Error('Wrong credentials!');
 
-  //     if (!isValidPassword) throw new Error('Wrong credentials!');
+      const accessToken = await this.jwtService.generateToken({
+        id: user.id,
+        roles: [user.role],
+      });
 
-  //     const accessToken = await this.jwtService.generateToken({
-  //       id: user.id,
-  //       roles: [user.role],
-  //     });
-
-  //     return { ...this.userModel.userResponse(user), accessToken };
-  //   } catch (err) {
-  //     console.log(err);
-  //     return { message: err?.message || 'Error' };
-  //   }
-  // }
+      return { ...user.userResponse(user), accessToken };
+    } catch (err) {
+      return { message: err?.message || 'Error' };
+    }
+  }
   async createUser(createUserDto): Promise<UserDocument> {
     return this.create(createUserDto);
   }

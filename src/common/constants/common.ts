@@ -4,8 +4,8 @@ export const PAGINATION_DEFAULT = {
 } as const;
 
 export const CURRENCY = {
-  USD: 'usd',
-  VND: 'vnd',
+  USD: 'USD',
+  VND: 'VND',
 } as const;
 
 export const PAID = {

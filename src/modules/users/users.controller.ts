@@ -7,7 +7,7 @@ import {
   UploadedFile,
   UseGuards,
 } from '@nestjs/common';
-import { ApiHeader, ApiQuery } from '@nestjs/swagger';
+import { ApiHeader, ApiQuery, ApiTags } from '@nestjs/swagger';
 
 import { FileUpload } from '@/common/decorators/upload-file.decorator';
 import { Roles } from '@/common/decorators/roles.decorator';
@@ -19,11 +19,12 @@ import { ROLES } from '@/common/constants/roles';
 import {
   CreateUserDto,
   FindUserDto,
-  // LoginDto,
+  LoginDto,
   UploadAvatar,
 } from '@/modules/users/dto';
 import { UsersService } from './users.service';
 
+@ApiTags('users')
 @Controller('users')
 @UseGuards(RolesGuard)
 export class UsersController {
@@ -71,8 +72,8 @@ export class UsersController {
     };
   }
 
-  // @Post('login')
-  // async login(@Body() body: LoginDto) {
-  //   return this.userService.login(body);
-  // }
+  @Post('login')
+  async login(@Body() body: LoginDto) {
+    return this.userService.login(body);
+  }
 }

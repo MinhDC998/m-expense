@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 
 import { TValueof } from '@/common/types/common';
@@ -7,13 +7,20 @@ import { ROLES } from '@/common/constants/roles';
 import { TUser } from './users.types';
 import { BaseEntity } from '@/common/services/models/model';
 
-export type UserDocument = User & Document & BaseEntity;
+export interface UserMethods {
+  validatePassword(password: string, user: User): Promise<boolean>;
+  userResponse(user: User & Document & UserMethods): any;
+}
+
+export interface UserModel extends Model<User, object, UserMethods> {}
+
+export type UserDocument = User & Document & BaseEntity & UserMethods;
 
 @Schema({
   collection: 'users',
   timestamps: {
-    createdAt: 'created_at',
-    updatedAt: 'updated_at',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
   },
 })
 export class User implements TUser {
@@ -62,7 +69,7 @@ UserSchema.methods.validatePassword = async function (
   return bcrypt.compare(password, this.password);
 };
 
-UserSchema.statics.userResponse = function (user: UserDocument) {
+UserSchema.methods.userResponse = function (user: UserDocument) {
   const userObject = user.toObject();
   delete userObject.password;
   return userObject;

@@ -41,6 +41,8 @@ export type I18nTranslations = {
         "required": string;
         "email": string;
         "string": string;
+        "number": string;
+        "whitelistValidation": string;
     };
 };
 /* prettier-ignore */

@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean {
     const request = context.switchToHttp().getRequest<Request>();
     const token = request.headers.authorization?.split(' ')[1];
-
+    console.log(request.headers);
     if (!token) throw new ForbiddenException(this.i18n.t('index.forbidden'));
 
     const user = this.jwtService.verifyToken(token);
@@ -27,6 +27,7 @@ export class AuthGuard implements CanActivate {
     if (!user) throw new ForbiddenException(this.i18n.t('index.forbidden'));
 
     request.body.createdBy = user.id;
+    request.body.updatedBy = user.id;
     request.user = user;
 
     return true;

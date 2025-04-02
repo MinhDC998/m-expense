@@ -5,7 +5,8 @@ import { PassportModule } from '@nestjs/passport';
 import { configuration, I18nConfig, DatabaseConnection } from './config';
 import { LoggerMiddleware } from './common/middlewares/test';
 
-import { UsersModule } from './modules/users/users.module';
+import { UsersModule } from '@/modules/users/users.module';
+import { IncomesModule } from '@/modules/incomes/incomes.module';
 // import { DailyPaymentsController } from './modules/daily-payments/daily-payments.controller';
 // import { IncomesController } from './modules/incomes/incomes.controller';
 // import { DebtsController } from './modules/debts/debts.controller';
@@ -20,6 +21,7 @@ import { UsersModule } from './modules/users/users.module';
     DatabaseConnection,
     PassportModule,
     UsersModule,
+    IncomesModule,
   ],
   // controllers: [
   //   DailyPaymentsController,

@@ -15,7 +15,7 @@ export function setupSwagger(app: INestApplication) {
         description: 'Enter JWT token',
         in: 'header',
       },
-      'JWT-auth',
+      'JWT',
     )
     .build();
 

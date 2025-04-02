@@ -1,5 +1,7 @@
 {
     "required": "{field} is required",
     "email": "{email} must be an email",
-    "string": "{field} must be string"
+    "string": "{field} must be string",
+    "number": "{field} must be number",
+    "whitelistValidation": "{field} whitelistValidation"
 }

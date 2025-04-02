@@ -19,15 +19,15 @@ export class ResponseInterceptor<T> implements NestInterceptor<T, Response<T>> {
     context: ExecutionContext,
     next: CallHandler,
   ): Observable<Response<T>> {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     return next.handle().pipe(
       map((data) => {
         const statusCode = context.switchToHttp().getResponse().statusCode;
-
         return {
           statusCode: statusCode < 300 ? 'OK' : 'Error',
           message: data?.message,
-          result: data.result || data,
+          ...(data?.message ? {} : { result: data.result || data }),
         };
       }),
     );
